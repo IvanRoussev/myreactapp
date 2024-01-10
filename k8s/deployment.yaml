@@ -1,42 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-app
+  name: reactapp
+  labels:
+    app: reactapp
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: react-app
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  minReadySeconds: 5
   template:
     metadata:
       labels:
-        app: react-app
+        app: reactapp
     spec:
-      nodeSelector:
-        'kubernetes.io/os': linux
       containers:
-        - name: react-app
+        - name: reactapp
           image: denshiimageregistry.azurecr.io/react-app-image
           ports:
             - containerPort: 3000
-          resources:
-            requests:
-              cpu: 250m
-            limits:
-              cpu: 500m
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: react-app
+  name: react-app-service
 spec:
-  type: LoadBalancer
-  ports:
-    - port: 3000
   selector:
-    app: react-app
+    app: reactapp
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer

@@ -1,3 +1,12 @@
+# To run the container for the react App please use the following guide
+
+1. run python script in command line with 4 arguments:
+   arg 1'react image name'
+   arg 2 'dockerfile path'
+   arg 3 'the container name'
+   arg4 --rebuild if you want to rebuild image if you dont want to rebuild image leave 4th arg empty
+
+   Example. python3 automate_build_process.py react-image . reactapp --rebuild
 
 # Getting Started with Create React App
 

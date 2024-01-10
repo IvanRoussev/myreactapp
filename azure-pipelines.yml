@@ -1,12 +1,12 @@
- # Docker
+# Docker
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- main
+  - main
 
 resources:
-- repo: self
+  - repo: self
 
 variables:
   TAG: '$(Build.BuildId)'
@@ -15,32 +15,34 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
 
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+pool:
+  vmImage: ubuntu-latest
+
 stages:
   - stage: Build
     displayName: Build and Push Image
     jobs:
-    - job: Login
-      displayName: Login ACR
-      steps:
-      - task: Docker@2
-        inputs:
-          containerRegistry: 'denshi-image-registry'
-          command: 'login'
-    - job: Build
-      dependsOn: Login
-      displayName: Build Docker Image and Push to ACR
-      steps:
-      - task: Docker@2
-        displayName: Build Image and Push to ACR
-        inputs:
-          containerRegistry: 'denshi-image-registry'
-          repository: '$(IMAGE_NAME)'
-          command: 'buildAndPush'
-          Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-          tags: '$(TAG)'
-      - script: ls
-    
+      - job: Login
+        displayName: Login ACR
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'denshi-image-registry'
+              command: 'login'
+
+      - job: Build
+        dependsOn: Login
+        displayName: Build Docker Image and Push to ACR
+        steps:
+          - task: Docker@2
+            displayName: Build Image and Push to ACR
+            inputs:
+              containerRegistry: 'denshi-image-registry'
+              repository: '$(IMAGE_NAME)'
+              command: 'buildAndPush'
+              Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+              tags: '$(TAG)'
+
   - stage: Test
     displayName: Test React App
     jobs:
@@ -49,7 +51,7 @@ stages:
         steps:
           - script: echo "Testing App"
           - script: echo "Successfully Tested"
-  
+
   - stage: Deploy
     dependsOn: Test
     displayName: Deploy React App to Kubernetes Cluster
@@ -57,19 +59,18 @@ stages:
       - job: Deploy
         displayName: Deploy app to cluster
         steps:
-        - task: Kubernetes@1
-          inputs:
-            connectionType: 'Azure Resource Manager'
-            azureSubscriptionEndpoint: 'DenshiReactApp'
-            azureResourceGroup: 'Denshi'
-            kubernetesCluster: 'myDenshi-aks'
-            namespace: 'default'
-            command: 'apply'
-            useConfigurationFile: true
-            configuration: 'k8s/deployment.yaml'
-            secretType: 'dockerRegistry'
-            containerRegistryType: 'Azure Container Registry'
-            azureSubscriptionEndpointForSecrets: 'DenshiReactApp'
-            azureContainerRegistry: 'denshiimageregistry.azurecr.io'
-            forceUpdate: false
- 
+          - task: Kubernetes@1
+            inputs:
+              connectionType: 'Azure Resource Manager'
+              azureSubscriptionEndpoint: 'DenshiReactApp'
+              azureResourceGroup: 'Denshi'
+              kubernetesCluster: 'myDenshi-aks'
+              namespace: 'default'
+              command: 'apply'
+              useConfigurationFile: true
+              configuration: 'k8s/deployment.yaml'
+              secretType: 'dockerRegistry'
+              containerRegistryType: 'Azure Container Registry'
+              azureSubscriptionEndpointForSecrets: 'DenshiReactApp'
+              azureContainerRegistry: 'denshiimageregistry.azurecr.io'
+              forceUpdate: false

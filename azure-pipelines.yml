@@ -66,7 +66,7 @@ stages:
             namespace: 'default'
             command: 'apply'
             useConfigurationFile: true
-            configuration: 'kubernetes/deployment.yaml'
+            configuration: 'k8s/deployment.yaml'
             secretType: 'dockerRegistry'
             containerRegistryType: 'Azure Container Registry'
             azureSubscriptionEndpointForSecrets: 'DenshiReactApp'

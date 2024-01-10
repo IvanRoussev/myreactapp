@@ -1,5 +1,14 @@
 import subprocess
 import argparse
+import logging
+
+
+def setup_logging():
+    logging.basicConfig(
+        filename="automation.log",
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
 
 
 def automate_build(image_name, dockerfile_path):
@@ -7,10 +16,10 @@ def automate_build(image_name, dockerfile_path):
         subprocess.run(
             ["docker", "build", "-t", image_name, dockerfile_path], check=True
         )
-        print("Created Image: ", image_name)
+        logging.info("Created Image: %s", image_name)
 
     except subprocess.CalledProcessError as e:
-        print("Error: Couldn't Build image:", e)
+        logging.error("Error: Couldn't build image: %s", str(e))
         raise
 
 
@@ -28,13 +37,15 @@ def run_container(image_name, name_container):
                 image_name,
             ]
         )
+        logging.info("Started Docker container: %s", name_container)
 
     except subprocess.CalledProcessError as e:
-        print("Error: Couldn't spin up docker container:", e)
+        logging.error("Error: Couldn't spin up Docker container: %s", str(e))
         raise
 
 
 def main():
+    setup_logging()
     parser = argparse.ArgumentParser(
         description="Automate build and run for a Dockerized React app."
     )
@@ -49,13 +60,16 @@ def main():
 
     args = parser.parse_args()
 
-    if args.rebuild:
-        print("Building Image and running container")
-        automate_build(args.image_name, args.dockerfile_path)
-        run_container(args.image_name, args.name_container)
-    else:
-        print("Running container")
-        run_container(args.image_name, args.name_container)
+    try:
+        if args.rebuild:
+            logging.info("Building Image and running container")
+            automate_build(args.image_name, args.dockerfile_path)
+            run_container(args.image_name, args.name_container)
+        else:
+            logging.info("Running container")
+            run_container(args.image_name, args.name_container)
+    except Exception as e:
+        logging.exception("An error occurred: %s", str(e))
 
 
 if __name__ == "__main__":

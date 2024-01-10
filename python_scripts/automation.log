@@ -1,0 +1,3 @@
+2024-01-10 22:06:14,675 - INFO - Building Image and running container
+2024-01-10 22:06:25,731 - INFO - Created Image: react-image
+2024-01-10 22:06:26,018 - INFO - Started Docker container: reactapp

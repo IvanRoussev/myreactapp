@@ -17,10 +17,11 @@ spec:
       containers:
         - name: reactapp
           image: denshiimageregistry.azurecr.io/react-app-image
+          ports:
+            - containerPort: 3000
       imagePullSecrets:
         - name: acr-secret
-  ports:
-    - containerPort: 3000
+
 ---
 apiVersion: v1
 kind: Service

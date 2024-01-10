@@ -73,4 +73,5 @@ stages:
               containerRegistryType: 'Azure Container Registry'
               azureSubscriptionEndpointForSecrets: 'DenshiReactApp'
               azureContainerRegistry: 'denshiimageregistry.azurecr.io'
+              secretName: 'acr-secret'
               forceUpdate: false

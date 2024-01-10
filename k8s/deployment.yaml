@@ -21,7 +21,7 @@ spec:
         'kubernetes.io/os': linux
       containers:
         - name: react-app
-          image: denshiimageregistry.azurecr.io/react-app:latest
+          image: denshiimageregistry.azurecr.io/react-app-image
           ports:
             - containerPort: 3000
           resources:

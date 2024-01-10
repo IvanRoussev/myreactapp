@@ -6,6 +6,9 @@ metadata:
     app: reactapp
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: reactapp
   template:
     metadata:
       labels:

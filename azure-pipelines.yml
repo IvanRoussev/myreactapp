@@ -43,17 +43,6 @@ stages:
               Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
               tags: '$(TAG)'
 
-      - job: CreateConfigMap
-        displayName: Create ConfigMap
-        steps:
-          - task: UsePythonVersion@0
-            inputs:
-              versionSpec: '3.x'
-              addToPath: true
-          - script: |
-              kubectl apply -f k8s/configmap.yaml
-            displayName: Apply ConfigMap
-
   - stage: Test
     displayName: Test React App
     jobs:

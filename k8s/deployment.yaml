@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: reactapp
-    strategy:
+  strategy:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 1

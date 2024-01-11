@@ -5,7 +5,7 @@
 
 # Access my React app:
 
-http://52.142.37.60/
+http://4.236.214.231/
 
 The React app is hosted on a Kubernetes Cluster in Azure. To access the app, you can use the provided URL. Additionally, here are some deployment details:
 

@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: reactapp
-          image: denshiimageregistry.azurecr.io/react-app-image:latest
+          image: denshiimageregistry.azurecr.io/react-app-image:200
           ports:
             - containerPort: 3000
       imagePullSecrets:

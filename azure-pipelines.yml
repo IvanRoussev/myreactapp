@@ -11,10 +11,8 @@ resources:
 variables:
   TAG: '$(Build.BuildId)'
   IMAGE_NAME: react-app-image
-  # Container registry service connection established during pipeline creation
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
 
-  # Agent VM image name
 pool:
   vmImage: ubuntu-latest
 

@@ -21,7 +21,10 @@ spec:
     spec:
       containers:
         - name: reactapp
-          image: denshiimageregistry.azurecr.io/react-app-image:199
+          image: denshiimageregistry.azurecr.io/react-app-image:${TAG}
+          envFrom:
+            - configMapRef:
+                name: my-app-config
           ports:
             - containerPort: 3000
       imagePullSecrets:

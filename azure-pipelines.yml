@@ -74,5 +74,3 @@ stages:
               azureSubscriptionEndpointForSecrets: 'DenshiReactApp'
               azureContainerRegistry: 'denshiimageregistry.azurecr.io'
               forceUpdate: false
-        variables:
-          IMAGE_TAG: '${TAG}'

@@ -3,12 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-  branches:
-    exclude:
-      - '*'
-
-pr:
-  - '*'
+  - main
 
 resources:
   - repo: self
@@ -20,7 +15,8 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
 
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+pool:
+  vmImage: ubuntu-latest
 
 stages:
   - stage: Build
@@ -56,44 +52,23 @@ stages:
           - script: echo "Testing App"
           - script: echo "Successfully Tested"
 
-  - stage: DeployStaging
-    displayName: Deploy Staging Environment
+  - stage: Deploy
+    dependsOn: Test
+    displayName: Deploy React App to Kubernetes Cluster
     jobs:
-      - job: DeployStaging
-        displayName: Deploy app to staging cluster
+      - job: Deploy
+        displayName: Deploy app to cluster
         steps:
           - task: Kubernetes@1
             inputs:
               connectionType: 'Azure Resource Manager'
               azureSubscriptionEndpoint: 'DenshiReactApp'
               azureResourceGroup: 'Denshi'
-              kubernetesCluster: 'myDenshi-aks-staging' # Replace with your staging cluster name
-              namespace: 'staging'
+              kubernetesCluster: 'myDenshi-aks'
+              namespace: 'default'
               command: 'apply'
               useConfigurationFile: true
-              configuration: 'k8s/deployment.yaml' # Your staging deployment configuration
-              secretType: 'dockerRegistry'
-              containerRegistryType: 'Azure Container Registry'
-              azureSubscriptionEndpointForSecrets: 'DenshiReactApp'
-              azureContainerRegistry: 'denshiimageregistry.azurecr.io'
-              forceUpdate: false
-
-  - stage: DeployProduction
-    displayName: Deploy Production Environment
-    jobs:
-      - job: DeployProduction
-        displayName: Deploy app to production cluster
-        steps:
-          - task: Kubernetes@1
-            inputs:
-              connectionType: 'Azure Resource Manager'
-              azureSubscriptionEndpoint: 'DenshiReactApp'
-              azureResourceGroup: 'Denshi'
-              kubernetesCluster: 'myDenshi-aks-production' # Replace with your production cluster name
-              namespace: 'production'
-              command: 'apply'
-              useConfigurationFile: true
-              configuration: 'k8s/deployment.yaml' # Your production deployment configuration
+              configuration: 'k8s/deployment.yaml'
               secretType: 'dockerRegistry'
               containerRegistryType: 'Azure Container Registry'
               azureSubscriptionEndpointForSecrets: 'DenshiReactApp'

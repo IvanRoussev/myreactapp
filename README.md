@@ -1,80 +1,33 @@
-# To run the container for the react App please use the following guide
+# Access my React app:
 
-1. run python script in command line with 4 arguments:
-   arg 1'react image name'
-   arg 2 'dockerfile path'
-   arg 3 'the container name'
-   arg4 --rebuild if you want to rebuild image if you dont want to rebuild image leave 4th arg empty
+http://52.142.37.60/
 
-   Example. python3 automate_build_process.py react-image . reactapp --rebuild
+# React App Containerization Guide
 
-# Getting Started with Create React App
+This guide will help you run a containerized React application using the provided Python script and Docker.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Prerequisites
 
-## Available Scripts
+Before you begin, ensure that you have the following prerequisites installed on your system:
 
-In the project directory, you can run:
+- Python 3.x
+- Docker
 
-### `npm start`
+## Usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To run the container for the React app, follow these steps:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Open your terminal and navigate to the directory where your Python script is located.
 
-### `npm test`
+2. Run the Python script `automate_build_process.py` with the following arguments:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   - `arg1`: React image name (e.g., `react-image`).
+   - `arg2`: Path to the Dockerfile for the React app.
+   - `arg3`: The desired container name (e.g., `reactapp`).
+   - `arg4`: Use `--rebuild` if you want to rebuild the image. Leave it empty if you don't want to rebuild the image.
 
-### `npm run build`
+   Example:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   ```bash
+   python3 automate_build_process.py react-image . reactapp --rebuild
+   ```
